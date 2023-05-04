@@ -48,15 +48,13 @@ def listen():
         data = sock.recv(1024)
         print('\rpeer: {}\n> '.format(data.decode()), end='')
 
+listener = threading.Thread(target=listen, daemon=True);
+listener.start()
 
 # send messages
 # equiv: echo 'xxx' | nc -u -p 50002 x.x.x.x 50001
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.bind(('0.0.0.0', dport))
-
-
-listener = threading.Thread(target=listen, daemon=True);
-listener.start()
 
 while True:
     msg = input('> ')
